@@ -43,6 +43,19 @@ $query = "SELECT id,day,text FROM posts WHERE userid=$id ORDER BY day DESC  LIMI
 
 $row = $db->query($query);
 ?>
+<!--pop up confirmation code-->
+<script LANGUAGE="JavaScript">
+<!--
+function confirmPost()
+{
+var agree=confirm("Are you sure you want to delete this post?");
+if (agree)
+return true ;
+else
+return false ;
+}
+// -->
+</script>
 
 <table  width=50% border=0 >
 <?php
@@ -50,7 +63,7 @@ foreach ($row as $post ) {
 	echo "<tr>";
 	echo "<td valign=top width=3><i><small>".$post['day'].":</small></i></td>";
 	echo "<td valign=top align=justify >". nl2br($post['text']).  " </td>";	
-	echo "<td align=right ><form action=delpost.php method=post><input type=hidden name=id value=".$post['ID']." ><input type=submit value=X ></form></td>";
+	echo "<td align=right ><form action=delpost.php method=post><input type=hidden name=id value=".$post['ID']." ><input type=submit value=X  onClick=\"return confirmPost()\"></form></td>";
 	echo "</tr>";
 	}
 ?>

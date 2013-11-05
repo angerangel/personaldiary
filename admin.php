@@ -69,6 +69,21 @@ foreach ($users as $user) {
 
 
 <h3>Delete an user</h3>
+<!--pop up confirmation code-->
+<script LANGUAGE="JavaScript">
+<!--
+function confirmPost()
+{
+var agree=confirm("Are you sure you want to delete this user?");
+if (agree)
+return true ;
+else
+return false ;
+}
+// -->
+</script>
+
+
 <form action=admin_deluser.php method=post >
 <table border=0 >
 <tr>
@@ -82,7 +97,7 @@ foreach ($users as $user) {
 	}
 ?>
 </select>
-<input  type=submit name=submit value="Delete user" style="color: red;">
+<input  type=submit name=submit value="Delete user" style="color: red;" onClick="return confirmPost()">
 </td></tr></table>
 </form>
 
