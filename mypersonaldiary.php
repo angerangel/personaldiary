@@ -4,8 +4,11 @@ require_once('check.php');
 $query = "SELECT id FROM users WHERE user='$username' ";
 $row = $db->query($query)->fetch();
 $id = $row[0];
-$p = 0;
+#first post number  in the page
+$p = 0; 
 if (isset($_GET['p'])) {$p=$_GET['p'];}
+#here there are how many posts visualize per page:
+$oldpost = 30 ;
 ?>
 <div align=center>
 <h1>My personal Diary of  <?php echo $username;?></h1>
@@ -34,8 +37,7 @@ Date: <input type=date name=date  value=<?php  $query = "SELECT date('now') " ; 
 
 
 <?php 
-#here there are old post, just last 30...
-$oldpost = 30 ;
+
 
 $query = "SELECT id,day,text FROM posts WHERE userid=$id ORDER BY day DESC  LIMIT $oldpost  OFFSET $p ";
 
@@ -57,7 +59,7 @@ foreach ($row as $post ) {
 <table  width=50% border=0 >
 <tr><td width=20% align=left>
 <?php 
-
+#navigation liks between posts for newer posts
 if (isset($_GET['p'])) {
 	$p0 = $p - $oldpost;
 	if ($p0 > 0) {
@@ -70,13 +72,21 @@ if (isset($_GET['p'])) {
 </td>
 <td align=center>
 <?php
+#bottom string with post counter
 $query="SELECT count(id) FROM posts WHERE userid=$id  ";
 $row = $db->query($query)->fetch();
 $total_post = $row[0];
 $pp= $total_post - $p;
 $current = $p + $oldpost;
-if ($current > $total_post) {$current = $totalpost;}
-echo "Seeing posts $p - $current of $total_post";
+if ($current > $total_post) {$current = $total_post;}
+$bottomstring = "Seeing posts ";
+if ($p > 0) { 
+	$bottomstring .= "$p - " ;
+	} else {
+	$bottomstring .= "1 - " ;
+	}
+$bottomstring .= "$current of $total_post";	
+echo $bottomstring ;
 ?>
 </td>
 <td width=20% align=right>
